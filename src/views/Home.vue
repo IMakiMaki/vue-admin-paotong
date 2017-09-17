@@ -214,6 +214,7 @@
 				// bottom: 0px;
 				.el-menu{
 					height: 100%;
+					width: auto!important;
 				}
 				.collapsed{
 					width:60px;

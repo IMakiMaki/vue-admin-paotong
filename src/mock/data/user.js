@@ -1,12 +1,19 @@
 import Mock from 'mockjs';
 const LoginUsers = [
-  {
-    id: 1,
-    username: 'admin',
-    password: '123456',
-    avatar: 'https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png',
-    name: '张某某'
-  }
+    {
+      id: 1,
+      username: 'admin',
+      password: '123456',
+      avatar: 'https://avatars0.githubusercontent.com/u/18737872?v=4&s=460',
+      name: '管理员'
+    },
+    {
+        id: 2,
+        username: 'admin2',
+        password: '123456',
+        avatar: 'https://avatars0.githubusercontent.com/u/18737872?v=4&s=460',
+        name: '管理员'
+    }
 ];
 
 const Users = [];
