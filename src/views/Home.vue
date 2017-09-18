@@ -75,7 +75,7 @@
 	export default {
 		data() {
 			return {
-				sysName:'VUEADMIN',
+				sysName:'蚂蚁后台管理',
 				collapsed:false,
 				sysUserName: '',
 				sysUserAvatar: '',
@@ -138,7 +138,7 @@
 
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 	@import '~scss_vars';
 	
 	.container {
@@ -176,6 +176,7 @@
 				border-color: rgba(238,241,146,0.3);
 				border-right-width: 1px;
 				border-right-style: solid;
+				background: darken($color-primary, 10);
 				img {
 					width: 40px;
 					float: left;
@@ -212,9 +213,29 @@
 				// position: absolute;
 				// top: 0px;
 				// bottom: 0px;
-				.el-menu{
+				.el-menu-vertical-demo{
 					height: 100%;
 					width: auto!important;
+					background: $color-primary;
+					.el-submenu {
+						color: #fff;
+						.el-submenu__title{
+							color: #fff;
+							&:hover {
+								background: lighten($color-primary, 20);
+							}
+						}
+						.el-menu-item {
+							background: darken($color-primary, 10);
+							color: #95a7c0;
+							&.is-active{
+								color: #ffffff;
+							}
+							&:hover {
+								background: lighten($color-primary, 10);
+							}
+						}
+					}
 				}
 				.collapsed{
 					width:60px;
@@ -241,7 +262,7 @@
 				width: 230px;
 			}
 			.content-container {
-				// background: #f1f2f7;
+				background: #f1f2f7;
 				flex:1;
 				// position: absolute;
 				// right: 0px;
