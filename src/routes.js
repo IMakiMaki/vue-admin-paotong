@@ -1,7 +1,10 @@
 import Login from './views/Login.vue'
 import NotFound from './views/404.vue'
 import Home from './views/Home.vue'
-import Main from './views/Main.vue'
+
+import newUser from './views/newUser.vue'
+// import newUserSecond from ''
+
 import Table from './views/nav1/Table.vue'
 import Form from './views/nav1/Form.vue'
 import user from './views/nav1/user.vue'
@@ -23,14 +26,15 @@ let routes = [
         name: '',
         hidden: true
     },
-    //{ path: '/main', component: Main },
     {
         path: '/',
         component: Home,
         name: '审核板块',
+        redirect: '/main',
         iconCls: 'el-icon-message',//图标样式class
         children: [
-            { path: '/main', component: Main, name: '新增客户数据分析'},
+            { path: '/main', component: newUser, name: '新增客户数据分析（一）'},
+            { path: '/main-2', component: newUser, name: '新增客户数据分析（二）'},
             { path: '/table', component: Table, name: '已放款客户数据分析' }
         ]
     },
