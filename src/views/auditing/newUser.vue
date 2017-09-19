@@ -19,7 +19,7 @@
 
 <script>
 	import echarts from 'echarts'
-	import {dayIncrease, lastFiftyDays, userApply, notApply} from '../mock/data/user'
+	import {dayIncrease, lastFiftyDays, userApply, notApply, grantCount, averageCount, averageGrantCount} from '../../mock/data/user'
 
     export default {
         data() {
@@ -41,7 +41,7 @@
                         trigger: 'axis'
                     },
                     legend: {
-                        data: ['用户增量']
+                        data: ['每日用户增量', '每日平均新用户增量']
                     },
                     grid: {
                         left: '3%',
@@ -56,14 +56,20 @@
                     },
                     yAxis: {
                         type: 'value',
-						min: 100
+						min: 90
                     },
                     series: [
                         {
-                            name: '用户增量',
+                            name: '每日用户增量',
                             type: 'line',
-                            stack: '总量',
+                            stack: '',
                             data: dayIncrease
+                        },
+                        {
+                            name: '每日平均新用户增量',
+                            type: 'line',
+                            stack: '',
+                            data: averageCount
                         }
                     ]
                 });
@@ -111,7 +117,7 @@
                 this.newUserLotPie = echarts.init(document.getElementById('newUserLotPie'));
                 this.newUserLotPie.setOption({
                     title: {
-                        text: '新增用户占比',
+                        text: '新增用户放款情况',
                         subtext: '',
                         x: 'center'
                     },
@@ -123,7 +129,7 @@
                         orient: 'vertical',
                         left: 'left',
                         top: 30,
-                        data: ['今日新增用户', '已有用户']
+                        data: ['今日已放款新用户', '今日未放款新用户']
                     },
                     series: [
                         {
@@ -132,8 +138,8 @@
                             radius: '55%',
                             center: ['50%', '60%'],
                             data: [
-                                { value: dayIncrease[dayIncrease.length - 1], name: '今日新增用户' },
-                                { value: 75671, name: '已有用户' }
+                                { value: grantCount[grantCount.length - 1], name: '今日已放款新用户' },
+                                { value: dayIncrease[dayIncrease.length - 1] - grantCount[grantCount.length - 1], name: '今日未放款新用户' }
                             ],
                             itemStyle: {
                                 emphasis: {
@@ -150,13 +156,14 @@
 				this.newUserApplyLine = echarts.init(document.getElementById('newUserApplyLine'));
 				this.newUserApplyLine.setOption({
                     title: {
-                        text: '新增用户借款申请走势'
+                        text: '新增用户放款数走势'
                     },
                     tooltip: {
                         trigger: 'axis'
                     },
                     legend: {
-                        data:['未申请', '申请']
+                        left: '50%',
+                        data:['已放款', '平均每日新用户放款数']
                     },
                     grid: {
                         left: '3%',
@@ -174,16 +181,16 @@
                     },
                     series: [
                         {
-                            name: '未申请',
+                            name: '已放款',
                             type: 'line',
-                            stack: '总量',
-                            data: notApply
+                            stack: '',
+                            data: grantCount
                         },
                         {
-                            name:'申请',
-                            type:'line',
-                            stack: '总量',
-                            data: userApply
+                            name: '平均每日新用户放款数',
+                            type: 'line',
+                            stack: '',
+                            data: averageGrantCount
                         }
                     ]
 				})
