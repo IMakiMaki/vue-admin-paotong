@@ -3,9 +3,10 @@ import NotFound from './views/404.vue'
 import Home from './views/Home.vue'
 
 import newUser from './views/auditing/newUser.vue'
-import newUserSecond from './views/auditing/map.vue'//测试map
-
+import newUserSecond from './views/auditing/newUserSecond.vue'
+import schedule from './views/auditing/schedule.vue'
 import Table from './views/auditing/Table.vue'
+
 import Form from './views/auditing/Form.vue'
 import user from './views/auditing/user.vue'
 import Page4 from './views/dun/Page4.vue'
@@ -30,12 +31,12 @@ let routes = [
         path: '/',
         component: Home,
         name: '审核板块',
-        redirect: '/main',
+        redirect: '/newUser',
         iconCls: 'el-icon-message',//图标样式class
         children: [
-            { path: '/main', component: newUser, name: '新增客户数据分析（一）'},
-            { path: '/main-2', component: newUserSecond, name: '新增客户数据分析（二）'},
-            { path: '/table', component: Table, name: '已放款客户数据分析' }
+            { path: '/newUser', component: newUser, name: '新增客户数据分析（一）'},
+            { path: '/newUser-2', component: newUserSecond, name: '新增客户数据分析（二）'},
+            { path: '/schedule', component: schedule, name: '客户审批进度统计' }
         ]
     },
     {

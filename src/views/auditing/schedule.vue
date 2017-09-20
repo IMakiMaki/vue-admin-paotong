@@ -13,9 +13,6 @@
             <el-col :span="12">
                 <div id="newUserAgePie" style="width:100%; height:400px;"></div>
             </el-col>
-            <el-col :span="12">
-                <map-element></map-element>
-            </el-col>
         </el-row>
     </section>
 </template>
@@ -285,7 +282,6 @@
             this.drawCharts()
         }
     }
-
 </script>
 
 <style lang="scss" scoped>

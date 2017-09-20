@@ -1,172 +1,105 @@
 <template>
-    <div class="r-echarts-line">
-        <div class="top">
-            <div class="title">
-                {{origin.title}}
-            </div>
-            <div class="select-list">
-                <Select style="width:120px;margin-right:.5rem" v-model="pagePick">
-                    <Option v-for="item in origin.page_select" :key="item" :value="item.val">{{item.name}}</Option>
-                </Select>
-                <Select style="width:120px" v-model="typePick">
-                    <Option v-for="item in typeList" :value="item.name" :key="item">{{item.name}}</Option>
-                </Select>
-            </div>
-        </div>
-        <div class="des">说明：符合于本次筛选条件的共有<span class='tips'>{{origin.desc}}</span>条<span style="font-weight:700;color:black">职位信息</span>。</div>
-        <div class="bottom" id="echart" ref="mychart">
-
-        </div>
-    </div>
+    <div id="newUserAreaMap" style="width:100%; height:400px;"></div>
 </template>
 <script>
-    // echarts相关
-    let echarts = require('echarts/lib/echarts');
-    require('echarts/lib/chart/bar');
-    require('echarts/lib/component/tooltip');
-    require('echarts/lib/component/toolbox');
-    require('echarts/lib/component/legend');
-    require('echarts/lib/component/markLine');
-
+    import echarts from 'echarts'
+    import 'echarts/map/js/china'
     export default {
-        name: 'r-echarts-line',
         data () {
             return {
-                typePick: '数值',
-                typeList: [
-                    {
-                        name: '数值'
-                    },
-                    {
-                        name: '百分比'
-                    }
-                ],
-                pagePick: 0,
-                // myChart实例
-                myChart: {},
-                percent: {
-                    label: {
-                        normal: {
-                            show: true,
-                            position: 'inside',
-                            formatter: '{c}%'
-                        }
-                    }
-                },
-                numeric: {
-                    label: {
-                        normal: {
-                            show: true,
-                            position: 'inside',
-                            formatter: '{c}'
-                        }
-                    }
-                }
+                newUserAreaMap: null,
+                loading: true
             }
         },
         props: {
-            index: {
-                required: true,
-                type: Number
+        },
+        methods: {
+            drawNewUserAreaMapChart() {
+                this.newUserAreaMap = echarts.init(document.getElementById('newUserAreaMap'));
+                this.newUserAreaMap.setOption({
+                    series: [{
+                        type: 'map',
+                        map: 'china',
+                        roam: false,
+                        label: {
+                            normal: {
+                                show: false
+                            },
+                            emphasis: {
+                                show: true
+                            }
+                        },
+                        data:[
+                            {name: '北京',value: Math.round(Math.random()*5)},
+                            {name: '天津',value: Math.round(Math.random()*5)},
+                            {name: '上海',value: Math.round(Math.random()*5)+20},
+                            {name: '重庆',value: Math.round(Math.random()*5)},
+                            {name: '河北',value: Math.round(Math.random()*5)},
+                            {name: '河南',value: Math.round(Math.random()*5)},
+                            {name: '云南',value: Math.round(Math.random()*5)},
+                            {name: '辽宁',value: Math.round(Math.random()*5)},
+                            {name: '黑龙江',value: Math.round(Math.random()*5)},
+                            {name: '湖南',value: Math.round(Math.random()*5)},
+                            {name: '安徽',value: Math.round(Math.random()*5)},
+                            {name: '山东',value: Math.round(Math.random()*5)+20},
+                            {name: '新疆',value: Math.round(Math.random()*5)},
+                            {name: '江苏',value: Math.round(Math.random()*5)+10+10},
+                            {name: '浙江',value: Math.round(Math.random()*5)+10},
+                            {name: '江西',value: Math.round(Math.random()*5)+15},
+                            {name: '湖北',value: Math.round(Math.random()*5)+10},
+                            {name: '广西',value: Math.round(Math.random()*5)+19},
+                            {name: '甘肃',value: Math.round(Math.random()*5)+10},
+                            {name: '山西',value: Math.round(Math.random()*5)+10},
+                            {name: '内蒙古',value: Math.round(Math.random()*5)},
+                            {name: '陕西',value: Math.round(Math.random()*5)},
+                            {name: '吉林',value: Math.round(Math.random()*5)},
+                            {name: '福建',value: Math.round(Math.random()*5)},
+                            {name: '贵州',value: Math.round(Math.random()*5)},
+                            {name: '广东',value: Math.round(Math.random()*5)+10},
+                            {name: '青海',value: Math.round(Math.random()*5)},
+                            {name: '西藏',value: Math.round(Math.random()*5)},
+                            {name: '四川',value: Math.round(Math.random()*5)},
+                            {name: '宁夏',value: Math.round(Math.random()*5)},
+                            {name: '海南',value: Math.round(Math.random()*5)},
+                            {name: '台湾',value: Math.round(Math.random()*5)},
+                            {name: '香港',value: Math.round(Math.random()*5)},
+                            {name: '澳门',value: Math.round(Math.random()*5)}
+                        ]
+                    }],
+                    title : {
+                        text: '当日新用户地域分布',
+                        subtext: '',
+                        left: 'center'
+                    },
+                    tooltip : {
+                        trigger: 'item'
+                    },
+                    visualMap: {
+                        min: 0,
+                        max: 40,
+                        left: 'left',
+                        top: 'bottom',
+                        text:['高','低'],           // 文本，默认为数值文本
+                        calculable : true
+                    }
+                })
             },
-            data: {
-                required: true,
-                type: Object
+            drawCharts() {
+                this.drawNewUserAreaMapChart();
             }
         },
         mounted () {
-            this.setEchart();
+            this.drawCharts()
         },
         updated () {
-            if (!this.myChart) {
-                this.setEchart();
-            }
-            this.chartChange();
+
         },
         computed: {
-            origin () {
-                return this.data;
-            },
-            opt() {
-                let that = this;
-                let obj = {
-                    color: ['#606c94'],
-                    tooltip: {
-                    },
-                    toolbox: {
-                        show: true,
-                        feature: {
-                            saveAsImage: {show: true}
-                        }
-                    },
-                    label: {
-                        normal: {
-                            show: true,
-                            position: 'inside',
-                            formatter: '{c}'
-                        },
-                        emphasis: {
-                            show: true
-                        }
-                    },
-                    xAxis: {
-                        type: 'value',
-                    },
-                    yAxis: {
-                        data: that.origin[that.type][that.pagePick].key,
-                        axisLabel: {
-                            interval: 0,
-                            rotate: -30
-                        }
-                    },
-                    series: [{
-                        name: that.origin.title,
-                        type: 'bar',
-                        data: that.origin[that.type][that.pagePick].val,
-                        barMaxWidth: '30',
-                        markLine: {
-                            data: [
-                                {type: 'average', name: '平均值'}
-                            ]
-                        }
-                    }]
-                }
-                return obj;
-            },
-            type () {
-                if (this.typePick == '数值') {
-                    return 'numeric';
-                } else if (this.typePick == '百分比') {
-                    return 'percent';
-                } else {
-                    return 'numeric';
-                }
-            }
-        },
-        methods: {
-            setEchart () {
-                let dom = this.$refs.mychart;
-                this.myChart = echarts.init(dom);
-                this.myChart.setOption(this.opt);
-            },
-            chartChange () {
-                this.myChart.setOption(this.opt);
-                if (this.typePick == '百分比') {
-                    this.myChart.setOption(this.percent);
-                }
-                if (this.typePick == '数值') {
-                    this.myChart.setOption(this.numeric);
-                }
-            }
+
         }
     }
 </script>
 
 <style lang="scss">
-    .chart-container{
-        padding: 30px 10px 0px;
-        div{
-            margin-bottom: 35px;
-        }
-    }
+
 </style>
