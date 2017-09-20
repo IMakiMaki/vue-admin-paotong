@@ -5,13 +5,16 @@
                 <div id="newUserFrom" style="width:100%; height:400px;"></div>
             </el-col>
             <el-col :span="12">
-                <div id="newUserApplyPie" style="width:100%; height:400px;"></div>
+                <div id="newUserRejectPie" style="width:100%; height:400px;"></div>
             </el-col>
             <el-col :span="12">
-                <div id="newUserLotPie" style="width:100%; height:400px;"></div>
+                <div id="newUserSexPie" style="width:100%; height:400px;"></div>
             </el-col>
             <el-col :span="12">
-                <div id="newUserApplyLine" style="width:100%; height:400px;"></div>
+                <div id="newUserAgePie" style="width:100%; height:400px;"></div>
+            </el-col>
+            <el-col :span="12">
+                <div id="newUserAreaMap" style="width:100%; height:400px;"></div>
             </el-col>
         </el-row>
     </section>
@@ -26,16 +29,20 @@
         notApply,
         grantCount,
         dayIncreaseFrom,
-        typeArr
+        typeArr,
+        totalRejectObj,
+        sexData,
+        ageData
     } from '../../mock/data/user'
 console.log(typeArr)
     export default {
         data() {
             return {
                 newUserFrom: null,
-                newUserLotPie: null,
-                newUserApplyLine: null,
-                newUserApplyPie: null
+                newUserRejectPie: null,
+                newUserSexPie: null,
+                newUserAgePie: null,
+                newUserAreaMap: null
             }
         },
         methods: {
@@ -81,9 +88,9 @@ console.log(typeArr)
                     ]
                 });
             },
-            drawNewUserApplyPieChart() {
-                this.newUserApplyLine = echarts.init(document.getElementById('newUserApplyPie'));
-                this.newUserApplyLine.setOption({
+            drawNewUserRejectPieChart() {
+                this.newUserRejectPie = echarts.init(document.getElementById('newUserRejectPie'));
+                this.newUserRejectPie.setOption({
                     title: {
                         text: '新用户拒单原因',
                         subtext: '',
@@ -96,7 +103,8 @@ console.log(typeArr)
                     legend: {
                         orient: 'vertical',
                         x: 'left',
-                        data:['直达','营销广告','搜索引擎','邮件营销','联盟广告','视频广告','百度','谷歌','必应','其他']
+                        top: 30,
+                        data: totalRejectObj.data
                     },
                     series: [
                         {
@@ -104,7 +112,7 @@ console.log(typeArr)
                             type:'pie',
                             selectedMode: 'single',
                             radius: [0, '30%'],
-
+                            center: ['50%', '60%'],
                             label: {
                                 normal: {
                                     position: 'inner'
@@ -116,15 +124,15 @@ console.log(typeArr)
                                 }
                             },
                             data:[
-                                {value:335, name:'直达', selected:true},
-                                {value:679, name:'营销广告'},
-                                {value:1548, name:'搜索引擎'}
+                                {value: totalRejectObj.auto, name: '自动拒单'},
+                                {value: totalRejectObj.man, name:  '人工拒单'}
                             ]
                         },
                         {
                             name:'访问来源',
                             type:'pie',
                             radius: ['40%', '55%'],
+                            center: ['50%', '60%'],
                             label: {
                                 normal: {
                                     // shadowBlur:3,
@@ -165,24 +173,22 @@ console.log(typeArr)
                                 }
                             },
                             data:[
-                                {value:335, name:'直达'},
-                                {value:310, name:'邮件营销'},
-                                {value:234, name:'联盟广告'},
-                                {value:135, name:'视频广告'},
-                                {value:1048, name:'百度'},
-                                {value:251, name:'谷歌'},
-                                {value:147, name:'必应'},
-                                {value:102, name:'其他'}
+                                {value: totalRejectObj['autoValue'][0], name: totalRejectObj['autoData'][0]},
+                                {value: totalRejectObj['autoValue'][1], name: totalRejectObj['autoData'][1]},
+                                {value: totalRejectObj['autoValue'][2], name: totalRejectObj['autoData'][2]},
+                                {value: totalRejectObj['manValue'][0], name: totalRejectObj['manData'][0]},
+                                {value: totalRejectObj['manValue'][1], name: totalRejectObj['manData'][1]},
+                                {value: totalRejectObj['manValue'][2], name: totalRejectObj['manData'][2]}
                             ]
                         }
                     ]
                 });
             },
-            drawNewUserLotPieChart() {
-                this.newUserLotPie = echarts.init(document.getElementById('newUserLotPie'));
-                this.newUserLotPie.setOption({
+            drawNewUserSexPieChart() {
+                this.newUserSexPie = echarts.init(document.getElementById('newUserSexPie'));
+                this.newUserSexPie.setOption({
                     title: {
-                        text: '新增用户占比',
+                        text: '新增用户性别占比',
                         subtext: '',
                         x: 'center'
                     },
@@ -194,17 +200,17 @@ console.log(typeArr)
                         orient: 'vertical',
                         left: 'left',
                         top: 30,
-                        data: ['今日新增用户', '已有用户']
+                        data: ['男性', '女性']
                     },
                     series: [
                         {
-                            name: '新增用户占比',
+                            name: '新增用户性别占比',
                             type: 'pie',
                             radius: '55%',
                             center: ['50%', '60%'],
                             data: [
-                                { value: dayIncrease[dayIncrease.length - 1], name: '今日新增用户' },
-                                { value: 75671, name: '已有用户' }
+                                { value: sexData.male, name: '男性' },
+                                { value: sexData.female, name: '女性' }
                             ],
                             itemStyle: {
                                 emphasis: {
@@ -217,47 +223,59 @@ console.log(typeArr)
                     ]
                 });
             },
-            newUserApplyLineChart() {
-                this.newUserApplyLine = echarts.init(document.getElementById('newUserApplyLine'));
-                this.newUserApplyLine.setOption({
+            drawNewUserAgePieChart() {
+                this.newUserAgePie = echarts.init(document.getElementById('newUserAgePie'));
+                this.newUserAgePie.setOption({
                     title: {
-                        text: '新增用户放款数走势'
+                        text: '新增用户年龄占比',
+                        subtext: '',
+                        x: 'center'
                     },
                     tooltip: {
-                        trigger: 'axis'
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
                     },
                     legend: {
-                        data:['已放款']
-                    },
-                    grid: {
-                        left: '3%',
-                        right: '4%',
-                        bottom: '3%',
-                        containLabel: true
-                    },
-                    xAxis: {
-                        type: 'category',
-                        boundaryGap: false,
-                        data: lastFiftyDays
-                    },
-                    yAxis: {
-                        type: 'value'
+                        orient: 'vertical',
+                        left: 'left',
+                        top: 30,
+                        data: ageData.ageData
                     },
                     series: [
                         {
-                            name: '已放款',
-                            type: 'line',
-                            stack: '总量',
-                            data: grantCount
+                            name: '新增用户年龄占比',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data: [
+                                { value: ageData.ageValue[0], name: ageData.ageData[0] },
+                                { value: ageData.ageValue[1], name: ageData.ageData[1] },
+                                { value: ageData.ageValue[2], name: ageData.ageData[2] },
+                                { value: ageData.ageValue[3], name: ageData.ageData[3] },
+                                { value: ageData.ageValue[4], name: ageData.ageData[4] },
+                                { value: ageData.ageValue[5], name: ageData.ageData[5] },
+                                { value: ageData.ageValue[6], name: ageData.ageData[6] }
+                            ],
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
                         }
                     ]
                 })
             },
+            drawNewUserAreaMapChart() {
+                this.newUserAgePie = echarts.init(document.getElementById('newUserAreaMap'));
+            },
             drawCharts() {
                 this.drawNewUserFromChart()
-                this.drawNewUserApplyPieChart()
-                this.drawNewUserLotPieChart()
-                this.newUserApplyLineChart()
+                this.drawNewUserRejectPieChart()
+                this.drawNewUserSexPieChart()
+                this.drawNewUserAgePieChart()
+                this.drawNewUserAreaMapChart()
             },
         },
 

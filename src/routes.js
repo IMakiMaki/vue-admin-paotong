@@ -3,7 +3,7 @@ import NotFound from './views/404.vue'
 import Home from './views/Home.vue'
 
 import newUser from './views/auditing/newUser.vue'
-import newUserSecond from './views/auditing/newUserSecond.vue'
+import newUserSecond from './views/auditing/map.vue'//测试map
 
 import Table from './views/auditing/Table.vue'
 import Form from './views/auditing/Form.vue'

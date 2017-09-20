@@ -35,7 +35,9 @@ const grantCount = [];//每日已放款的用户数
 const averageGrantCount = [];//历史平均放款新用户
 const type = {0: '微信推广', 1: '电话营销', 2: '老用户推荐', 3: '广告点击', 4: '直达'};//客户来源数组
 const typeArr = [];//将类型对象转换成数组传给echarts
-const rejectObj = {};//当日拒单原因
+const totalRejectObj = {};
+const sexData = {};//新增用户性别
+const ageData = {};//新增用户年龄分布
 for(let i in type) {
     typeArr.push(type[i]);
 }
@@ -101,12 +103,59 @@ for (let i = 1; i < 51; i++) {
 
 //生成每日拒单原因
 (()=>{
+    let rejectObj = {};//当日拒单原因
     let autoReason = ['年龄', '地域', '黑名单'];
     let manReason = ['收入', '客户拒绝', '虚假信息'];
     let total = userApply[userApply.length - 1] - grantCount[grantCount.length - 1];//当天拒单人数
     let auto = Math.floor(10 + Math.random() * 5);
     let man = total - auto;
-    console.log(auto, man)
+
+    let autoNum = 0;
+    rejectObj['auto'] = {};
+    rejectObj['man'] = {};
+    totalRejectObj['autoValue'] = [];
+    totalRejectObj['manValue'] = [];
+    for (let i = 0; i < autoReason.length - 1 ; i++) {
+        let item = Math.floor(Math.random() * 2 + 3);
+        rejectObj['auto'][autoReason[i]] = item;
+        autoNum += item;
+        totalRejectObj['autoValue'].push(item);
+    }
+    totalRejectObj['autoValue'].push(auto - autoNum);
+    console.log(rejectObj)
+
+    let manNum = 0;
+    for (let i = 0; i < manReason.length - 1 ; i++) {
+        let item = Math.floor(Math.random() * 2 + 3);
+        rejectObj['man'][manReason[i]] = item;
+        manNum += item;
+        totalRejectObj['manValue'].push(item);
+    }
+    totalRejectObj['manValue'].push(man - manNum);
+
+    //整合拒单数据
+    totalRejectObj['man'] = man;
+    totalRejectObj['auto'] = auto;
+    totalRejectObj['manData'] = manReason;
+    totalRejectObj['autoData'] = autoReason;
+    totalRejectObj['data'] = manReason.concat(autoReason);
+})();
+console.log(totalRejectObj);
+
+//新增用户性别数据模拟
+(()=>{
+    let total = dayIncrease[dayIncrease.length - 1];
+    let male = total * (Math.random() * 2 + 6) / 10;
+    let female = total - male;
+    sexData.male = male;
+    sexData.female = female;
+})();
+
+//新增用户年龄分布模拟
+(() => {
+    let item = dayIncrease[dayIncrease.length - 1];
+    ageData['ageData'] = ['18~24岁', '24~30岁', '30~36岁', '36~42岁', '42~48岁', '48~54岁', '54~60岁'];
+    ageData['ageValue'] = [10, item - (10+20+32+20+18+10), 20, 18, 20, 18, 10];
 })();
 
 export {
@@ -120,5 +169,8 @@ export {
     averageCount,
     averageGrantCount,
     dayIncreaseFrom,
-    typeArr
+    typeArr,
+    totalRejectObj,
+    sexData,
+    ageData
 };
