@@ -145,7 +145,7 @@ console.log(totalRejectObj);
 //新增用户性别数据模拟
 (()=>{
     let total = dayIncrease[dayIncrease.length - 1];
-    let male = total * (Math.random() * 2 + 6) / 10;
+    let male = Math.floor(total * (Math.random() * 2 + 6) / 10);
     let female = total - male;
     sexData.male = male;
     sexData.female = female;

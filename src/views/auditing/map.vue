@@ -89,7 +89,9 @@
             }
         },
         mounted () {
-            this.drawCharts()
+            this.$nextTick(()=>{
+                this.drawCharts();//解决地图加载较慢的问题
+            })
         },
         updated () {
 

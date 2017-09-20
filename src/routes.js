@@ -7,6 +7,8 @@ import newUserSecond from './views/auditing/newUserSecond.vue'
 import schedule from './views/auditing/schedule.vue'
 import Table from './views/auditing/Table.vue'
 
+import totalData from './views/overdue/totalData.vue'
+
 import Form from './views/auditing/Form.vue'
 import user from './views/auditing/user.vue'
 import Page4 from './views/dun/Page4.vue'
@@ -45,7 +47,7 @@ let routes = [
         name: '催收板块',
         iconCls: 'fa fa-id-card-o',
         children: [
-            { path: '/page4', component: Page4, name: '客户逾期数据分析' },
+            { path: '/overdue', component: totalData, name: '客户逾期数据分析' },
             { path: '/page5', component: Page5, name: '数据分层明细' },
             { path: '/page5', component: Page5, name: '逾期客户数据监控' }
         ]

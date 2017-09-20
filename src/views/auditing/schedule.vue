@@ -2,16 +2,16 @@
     <section class="chart-container">
         <el-row>
             <el-col :span="12">
-                <div id="newUserFrom" style="width:100%; height:400px;"></div>
+                <div id="auditSchedulePie" style="width:100%; height:400px;"></div>
             </el-col>
             <el-col :span="12">
-                <div id="newUserRejectPie" style="width:100%; height:400px;"></div>
+                <div id="alreadyAuditPie" style="width:100%; height:400px;"></div>
             </el-col>
             <el-col :span="12">
-                <div id="newUserSexPie" style="width:100%; height:400px;"></div>
+                <div id="grantMoneyPie" style="width:100%; height:400px;"></div>
             </el-col>
             <el-col :span="12">
-                <div id="newUserAgePie" style="width:100%; height:400px;"></div>
+                <div id="grantMoneyCountPie" style="width:100%; height:400px;"></div>
             </el-col>
         </el-row>
     </section>
@@ -38,19 +38,19 @@
         },
         data() {
             return {
-                newUserFrom: null,
-                newUserRejectPie: null,
-                newUserSexPie: null,
+                auditSchedulePie: null,
+                alreadyAuditPie: null,
+                grantMoneyPie: null,
                 newUserAgePie: null,
-                newUserAreaMap: null
+                grantMoneyCountPie: null
             }
         },
         methods: {
-            drawNewUserFromChart() {
-                this.newUserFrom = echarts.init(document.getElementById('newUserFrom'));
-                this.newUserFrom.setOption({
+            drawAuditSchedulePieChart() {
+                this.auditSchedulePie = echarts.init(document.getElementById('auditSchedulePie'));
+                this.auditSchedulePie.setOption({
                     title: {
-                        text: '新用户来源',
+                        text: '客户审批进度统计',
                         subtext: '',
                         x: 'center'
                     },
@@ -62,20 +62,17 @@
                         orient: 'vertical',
                         left: 'left',
                         top: 30,
-                        data: typeArr
+                        data: ['自动化审核', '人工审核']
                     },
                     series: [
                         {
-                            name: '新用户来源',
+                            name: '客户审批进度统计',
                             type: 'pie',
                             radius: '55%',
                             center: ['50%', '60%'],
                             data: [
-                                { value: dayIncreaseFrom[0], name: typeArr[0] },
-                                { value: dayIncreaseFrom[1], name: typeArr[1] },
-                                { value: dayIncreaseFrom[2], name: typeArr[2] },
-                                { value: dayIncreaseFrom[3], name: typeArr[3] },
-                                { value: dayIncreaseFrom[4], name: typeArr[4] }
+                                { value: 200, name: "自动化审核" },
+                                { value: 135, name: "人工审核" }
                             ],
                             itemStyle: {
                                 emphasis: {
@@ -88,11 +85,11 @@
                     ]
                 });
             },
-            drawNewUserRejectPieChart() {
-                this.newUserRejectPie = echarts.init(document.getElementById('newUserRejectPie'));
-                this.newUserRejectPie.setOption({
+            drawAlreadyAuditPieChart() {
+                this.alreadyAuditPie = echarts.init(document.getElementById('alreadyAuditPie'));
+                this.alreadyAuditPie.setOption({
                     title: {
-                        text: '新用户拒单原因',
+                        text: '已审核案件统计',
                         subtext: '',
                         x: 'center'
                     },
@@ -104,7 +101,7 @@
                         orient: 'vertical',
                         x: 'left',
                         top: 30,
-                        data: totalRejectObj.data
+                        data: ['人工通过', '自动通过', '人工拒绝', '自动拒绝']
                     },
                     series: [
                         {
@@ -124,8 +121,8 @@
                                 }
                             },
                             data:[
-                                {value: totalRejectObj.auto, name: '自动拒单'},
-                                {value: totalRejectObj.man, name:  '人工拒单'}
+                                {value: 21515, name: '审核通过'},
+                                {value: 6500, name:  '审核拒绝'}
                             ]
                         },
                         {
@@ -173,22 +170,20 @@
                                 }
                             },
                             data:[
-                                {value: totalRejectObj['autoValue'][0], name: totalRejectObj['autoData'][0]},
-                                {value: totalRejectObj['autoValue'][1], name: totalRejectObj['autoData'][1]},
-                                {value: totalRejectObj['autoValue'][2], name: totalRejectObj['autoData'][2]},
-                                {value: totalRejectObj['manValue'][0], name: totalRejectObj['manData'][0]},
-                                {value: totalRejectObj['manValue'][1], name: totalRejectObj['manData'][1]},
-                                {value: totalRejectObj['manValue'][2], name: totalRejectObj['manData'][2]}
+                                {value: 8592, name: '人工通过'},
+                                {value: 12923, name: '自动通过'},
+                                {value: 4205, name: '人工拒绝'},
+                                {value: 2295, name: '自动拒绝'}
                             ]
                         }
                     ]
                 });
             },
-            drawNewUserSexPieChart() {
-                this.newUserSexPie = echarts.init(document.getElementById('newUserSexPie'));
-                this.newUserSexPie.setOption({
+            drawGrantMoneyPieChart() {
+                this.grantMoneyPie = echarts.init(document.getElementById('grantMoneyPie'));
+                this.grantMoneyPie.setOption({
                     title: {
-                        text: '新增用户性别占比',
+                        text: '放款数量统计',
                         subtext: '',
                         x: 'center'
                     },
@@ -200,17 +195,17 @@
                         orient: 'vertical',
                         left: 'left',
                         top: 30,
-                        data: ['男性', '女性']
+                        data: ['已放款', '待放款']
                     },
                     series: [
                         {
-                            name: '新增用户性别占比',
+                            name: '放款数量统计',
                             type: 'pie',
                             radius: '55%',
                             center: ['50%', '60%'],
                             data: [
-                                { value: sexData.male, name: '男性' },
-                                { value: sexData.female, name: '女性' }
+                                { value: sexData.male, name: '已放款' },
+                                { value: sexData.female, name: '待放款' }
                             ],
                             itemStyle: {
                                 emphasis: {
@@ -223,11 +218,11 @@
                     ]
                 });
             },
-            drawNewUserAgePieChart() {
-                this.newUserAgePie = echarts.init(document.getElementById('newUserAgePie'));
-                this.newUserAgePie.setOption({
+            drawGrantMoneyCountPieChart() {
+                this.grantMoneyCountPie = echarts.init(document.getElementById('grantMoneyCountPie'));
+                this.grantMoneyCountPie.setOption({
                     title: {
-                        text: '新增用户年龄占比',
+                        text: '放款金额统计',
                         subtext: '',
                         x: 'center'
                     },
@@ -239,22 +234,17 @@
                         orient: 'vertical',
                         left: 'left',
                         top: 30,
-                        data: ageData.ageData
+                        data: ["已放款", '待放款']
                     },
                     series: [
                         {
-                            name: '新增用户年龄占比',
+                            name: '放款金额统计',
                             type: 'pie',
                             radius: '55%',
                             center: ['50%', '60%'],
                             data: [
-                                { value: ageData.ageValue[0], name: ageData.ageData[0] },
-                                { value: ageData.ageValue[1], name: ageData.ageData[1] },
-                                { value: ageData.ageValue[2], name: ageData.ageData[2] },
-                                { value: ageData.ageValue[3], name: ageData.ageData[3] },
-                                { value: ageData.ageValue[4], name: ageData.ageData[4] },
-                                { value: ageData.ageValue[5], name: ageData.ageData[5] },
-                                { value: ageData.ageValue[6], name: ageData.ageData[6] }
+                                { value: 131205000, name: "已放款" },
+                                { value: 10251000, name: '待放款' }
                             ],
                             itemStyle: {
                                 emphasis: {
@@ -268,10 +258,10 @@
                 })
             },
             drawCharts() {
-                this.drawNewUserFromChart()
-                this.drawNewUserRejectPieChart()
-                this.drawNewUserSexPieChart()
-                this.drawNewUserAgePieChart()
+                this.drawAuditSchedulePieChart()
+                this.drawAlreadyAuditPieChart()
+                this.drawGrantMoneyPieChart()
+                this.drawGrantMoneyCountPieChart()
             },
         },
 
