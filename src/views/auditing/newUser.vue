@@ -19,7 +19,7 @@
 
 <script>
 	import echarts from 'echarts'
-	import {dayIncrease, lastFiftyDays, userApply, notApply, grantCount, averageCount, averageGrantCount} from '../../mock/data/user'
+	import {dayIncrease, lastFiftyDays, userApply, notApply, grantCount, averageCount, averageGrantCount} from '../../mock/data/data'
 
     export default {
         data() {
@@ -204,7 +204,9 @@
         },
 
         mounted: function () {
-            this.drawCharts()
+            this.$nextTick(()=>{
+                this.drawCharts();//解决地图加载较慢的问题
+            })
         },
         updated: function () {
             this.drawCharts()

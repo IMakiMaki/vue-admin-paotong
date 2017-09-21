@@ -31,7 +31,7 @@
         totalRejectObj,
         sexData,
         ageData
-    } from '../../mock/data/user'
+    } from '../../mock/data/data'
     export default {
         components:{
             mapElement
@@ -277,7 +277,7 @@
 <style lang="scss" scoped>
     .chart-container{
         padding: 30px 10px 0px;
-        div{
+        >div{
             margin-bottom: 35px;
         }
     }

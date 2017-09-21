@@ -13,12 +13,14 @@ const Users = [];
 
 for (let i = 0; i < 86; i++) {
   Users.push(Mock.mock({
-    id: Mock.Random.guid(),
-    name: Mock.Random.cname(),
-    addr: Mock.mock('@county(true)'),
-    'age|18-60': 1,
-    birth: Mock.Random.date(),
-    sex: Mock.Random.integer(0, 1)
+      id: Mock.Random.integer(1,999999),
+      name: Mock.Random.cname(),
+      addr: Mock.mock('@county(true)'),
+      'age|18-60': 1,
+      tel: /^1[3-8][0-9]{9}$/,
+      overdue: Mock.Random.integer(1, 100),
+      birth: Mock.Random.date(),
+      sex: Mock.Random.integer(0, 1)
   }));
 }
 
@@ -38,6 +40,9 @@ const typeArr = [];//将类型对象转换成数组传给echarts
 const totalRejectObj = {};
 const sexData = {};//新增用户性别
 const ageData = {};//新增用户年龄分布
+const backPoint = [];//每日回款率数组
+const last300Days = [];//过去300天日期
+
 for(let i in type) {
     typeArr.push(type[i]);
 }
@@ -93,13 +98,15 @@ for (let i = 0; i < 50; i++){
 // console.log(averageGrantCount)
 
 //生成50天的日期
-let now = new Date();
-let itemDay = 1000 * 3600 * 24;
-for (let i = 1; i < 51; i++) {
-    let item = new Date(now.getTime() - itemDay * i);
-    lastFiftyDays.unshift(`${item.getMonth()+1}月${item.getDate()+1}日`)
-}
-// console.log(dayIncrease, userApply, notApply, grantCount);、
+(()=>{
+    let now = new Date();
+    let itemDay = 1000 * 3600 * 24;
+    for (let i = 1; i < 51; i++) {
+        let item = new Date(now.getTime() - itemDay * i);
+        lastFiftyDays.unshift(`${item.getMonth()+1}月${item.getDate()+1}日`)
+    }
+    // console.log(dayIncrease, userApply, notApply, grantCount);、
+})();
 
 //生成每日拒单原因
 (()=>{
@@ -158,6 +165,25 @@ console.log(totalRejectObj);
     ageData['ageValue'] = [10, item - (10+20+32+20+18+10), 20, 18, 20, 18, 10];
 })();
 
+//模拟每日回款率
+(()=>{
+    for (let i = 0; i < 300; i++) {
+        backPoint.push(Number((Math.random()*0.03 + 0.94).toFixed(3)));
+    }
+})();
+
+//生成300天的日期
+(()=>{
+    let now = new Date();
+    let itemDay = 1000 * 3600 * 24;
+    for (let i = 1; i < 301; i++) {
+        let item = new Date(now.getTime() - itemDay * i);
+        last300Days.unshift(`${item.getFullYear()}年${item.getMonth()+1}月${item.getDate()+1}日`)
+    }
+    // console.log(dayIncrease, userApply, notApply, grantCount);、
+})();
+
+console.log(backPoint)
 export {
     LoginUsers,
     Users,
@@ -172,5 +198,7 @@ export {
     typeArr,
     totalRejectObj,
     sexData,
-    ageData
+    ageData,
+    backPoint,
+    last300Days
 };

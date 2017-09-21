@@ -5,12 +5,14 @@ import Home from './views/Home.vue'
 import newUser from './views/auditing/newUser.vue'
 import newUserSecond from './views/auditing/newUserSecond.vue'
 import schedule from './views/auditing/schedule.vue'
-import Table from './views/auditing/Table.vue'
+import Table from './views/overdue/Table.vue'
 
+import overDueUser from './views/overdue/overDueUser.vue'
 import totalData from './views/overdue/totalData.vue'
 
+import employeeMain from './views/employee/employeeMain.vue'
+
 import Form from './views/auditing/Form.vue'
-import user from './views/auditing/user.vue'
 import Page4 from './views/dun/Page4.vue'
 import Page5 from './views/dun/Page5.vue'
 import Page6 from './views/risk/Page6.vue'
@@ -48,8 +50,7 @@ let routes = [
         iconCls: 'fa fa-id-card-o',
         children: [
             { path: '/overdue', component: totalData, name: '客户逾期数据分析' },
-            { path: '/page5', component: Page5, name: '数据分层明细' },
-            { path: '/page5', component: Page5, name: '逾期客户数据监控' }
+            { path: '/overdue-actual', component: overDueUser, name: '逾期客户数据实时监控' }
         ]
     },
     {
@@ -76,7 +77,7 @@ let routes = [
         name: '内部人员管理',
         iconCls: 'fa fa-bar-chart',
         children: [
-            { path: '/echarts', component: echarts, name: 'echarts' }
+            { path: '/employee', component: employeeMain, name: '在线人员管理' }
         ]
     },
     {

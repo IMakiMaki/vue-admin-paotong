@@ -1,1 +1,7 @@
 $color-primary: #314257;//#18c79c
+.clearfix::after{
+  content: '';
+  display: block;
+  visibility: hidden;
+  clear: both;
+}
