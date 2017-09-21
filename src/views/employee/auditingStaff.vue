@@ -1,6 +1,6 @@
 <template>
-    <el-col class="customer-service" :span="24">
-        <el-row><h2>客服人员管理</h2></el-row>
+    <el-col class="dun-staff" :span="24">
+        <el-row><h2>审核人员管理</h2></el-row>
         <el-row :gutter="20">
             <el-col class="staff-list" :span="4">
                 <el-table
@@ -21,21 +21,18 @@
                 </el-table>
             </el-col>
             <el-col :span="10">
-                <el-card class="avg-card">
-                    <h2>今日每单平均处理时长</h2>
-                    <p class="el-icon-time">{{ currentChange.data.time }}</p>
+                <el-card class="speed-card">
+                    <h2>今日平均每单处理速度</h2>
+                    <p class="el-icon-time">{{ currentChange.data.speed }}</p>
                     <div class="bottom">
                         比前一天提高了<span>{{ currentChange.data.updated }}</span>!
                     </div>
                 </el-card>
             </el-col>
             <el-col :span="10">
-                <el-card class="total-card">
-                    <h2>今日处理单数</h2>
-                    <p class="el-icon-edit">{{ currentChange.data.today }}</p>
-                    <div class="bottom">
-                        比前一天增加了<span>{{ currentChange.data.increase }}</span>单!
-                    </div>
+                <el-card class="percent-card">
+                    <h2>截止今日案件逾期率</h2>
+                    <p class="el-icon-circle-cross">{{ currentChange.data.overdue }}</p>
                 </el-card>
             </el-col>
         </el-row>
@@ -48,69 +45,62 @@
         },
         data() {
             return {
-                listData: [
+                listData:[
                     {
-                        type: '客服',
-                        name: '王小虎',
+                        type: '审核员',
+                        name: '任伟',
                         data: {
-                            time: '00:30:34',
-                            updated: '00:05:20',
-                            today: 50,
-                            increase: 10
+                            speed: "00:09:54",
+                            overdue: "8%",
+                            updated: "00:03:20",
                         }
                     }, {
-                        type: '客服',
-                        name: '邓明',
+                        type: '审核员',
+                        name: '方涛',
                         data: {
-                            time: '00:28:10',
-                            updated: '00:01:20',
-                            today: 56,
-                            increase: 5
+                            speed: "00:10:44",
+                            updated: "00:01:22",
+                            overdue: "2%"
                         }
                     }, {
-                        type: '客服',
-                        name: '李明',
+                        type: '审核员',
+                        name: '黄强',
                         data: {
-                            time: '00:10:21',
-                            updated: '00:01:01',
-                            today: 46,
-                            increase: 10
+                            speed: "00:08:22",
+                            updated: "00:00:10",
+                            overdue: "9%"
                         }
                     }, {
-                        type: '客服',
-                        name: '梁磊',
+                        type: '审核员',
+                        name: '董敏',
                         data: {
-                            time: '00:09:21',
-                            updated: '00:00:31',
-                            today: 36,
-                            increase: 2
+                            speed: "00:15:17",
+                            updated: "00:01:08",
+                            overdue: "10%"
                         }
                     },{
-                        type: '客服',
-                        name: '郑超',
+                        type: '审核员',
+                        name: '曹静',
                         data: {
-                            time: '00:04:11',
-                            updated: '00:00:51',
-                            today: 55,
-                            increase: 12
+                            speed: "00:09:36",
+                            updated: "00:00:08",
+                            overdue: "7%"
                         }
                     },{
-                        type: '客服',
-                        name: '白明',
+                        type: '审核员',
+                        name: '汤静',
                         data: {
-                            time: '00:08:23',
-                            updated: '00:08:00',
-                            today: 66,
-                            increase: 5
+                            speed: "00:08:29",
+                            updated: "00:01:20",
+                            overdue: "3%"
                         }
                     },{
-                        type: '客服',
-                        name: '姜超',
+                        type: '审核员',
+                        name: '史敏',
                         data: {
-                            time: '00:04:21',
-                            updated: '00:08:01',
-                            today: 35,
-                            increase: 3
+                            speed: "00:15:22",
+                            updated: "00:00:20",
+                            overdue: "2%"
                         }
                     }
                 ],
@@ -118,10 +108,9 @@
                     type: '..',
                     name: '..',
                     data: {
-                        time: '..',
-                        updated: '..',
-                        today: 0,
-                        increase: 0
+                        speed: 0,
+                        updated: "..",
+                        overdue: ".."
                     }
                 }
             }
@@ -142,7 +131,7 @@
 </script>
 
 <style lang="scss" scoped>
-    .customer-service{
+    .dun-staff{
         .staff-list{
             cursor: pointer;
         }
@@ -160,13 +149,13 @@
                 }
             }
         }
-        .avg-card{
+        .speed-card{
             background: #1d8ce0;
             color: #ffffff;
         }
-        .total-card{
+        .percent-card{
             color: #ffffff;
-            background: #11b95c;
+            background: #ff6d1f;
         }
     }
 </style>
