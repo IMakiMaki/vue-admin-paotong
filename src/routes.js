@@ -12,6 +12,8 @@ import totalData from './views/overdue/totalData.vue'
 
 import employeeMain from './views/employee/employeeMain.vue'
 
+import financingMain from './views/financing/financingMain.vue'
+
 import Form from './views/auditing/Form.vue'
 import Page4 from './views/dun/Page4.vue'
 import Page5 from './views/dun/Page5.vue'
@@ -58,6 +60,7 @@ let routes = [
         component: Home,
         name: '风控板块',
         iconCls: 'fa fa-address-card',
+        hidden: true,
         children: [
             { path: '/page6', component: Page6, name: '导航三' }
         ]
@@ -68,7 +71,7 @@ let routes = [
         name: '财务板块',
         iconCls: 'fa fa-bar-chart',
         children: [
-            { path: '/echarts', component: echarts, name: 'echarts' }
+            { path: '/financing', component: financingMain, name: '财务报表' }
         ]
     },
     {
